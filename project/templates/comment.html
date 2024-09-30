@@ -1,0 +1,36 @@
+{% extends 'main.html' %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head> 
+<body>
+    <form action="" method="post">
+        {% csrf_token %}
+        {{forms.as_p}}
+        <button type="submit">save</button>
+        <form action="" method="post">
+            {% csrf_token %}
+            <input type="hidden" name="c_id" value="{{i.id}}">
+            {% if request.user in i.likes.user.all %}
+              <button type="submit" class="btn btn-light">
+                <i class="bi bi-heart-fill"></i>
+                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-heart-fill" viewBox="0 0 16 16">
+                  <path fill-rule="evenodd" d="M8 1.314C12.438-3.248 23.534 4.735 8 15-7.534 4.736 3.562-3.248 8 1.314"/>
+                </svg>
+              </button>
+            {% else %}
+              <button type="submit" class="btn btn-info">
+                  <i class="bi bi-heart-fill"></i>
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-heart-fill" viewBox="0 0 16 16">
+                <path fill-rule="evenodd" d="M8 1.314C12.438-3.248 23.534 4.735 8 15-7.534 4.736 3.562-3.248 8 1.314"/>
+                </svg>
+            </button>
+            {% endif %}
+            {{i.likes.user.count}}
+    </form>
+    
+</body> 
+</html>

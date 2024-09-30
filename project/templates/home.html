@@ -1,0 +1,90 @@
+{% extends 'main.html' %}
+
+{% block content %}
+
+
+     <!-- section cards -->
+
+    <div class="container">
+     <div class="row row-cols-1 row-cols-md-2 g-4 mt-5">
+      {% for i in categories %}
+      <h6 style="text-align: center; display: flex;">
+      <a href="{% url 'home' %}?category={{i.id}}" style="text-decoration: none; color: chocolate;">
+        {{i.name}}
+      </a>  
+      </h6>
+      {% endfor %}
+      <hr style="color: red; background-color: red; height: 3px;"><br><hr style="color: red; background-color: red; height: 3px;"><br>
+      {% for i in page.object_list %}
+      <div class="row">
+        <div class="col-5"></div>
+        <div class="col-10">
+          <a href="{% url 'detail' i.id %}" style="text-decoration: none;">
+          <div class="container">
+            <div class="col">
+                  <div class="col">
+                    <div class="card-group">
+                      <div class="card"><h4 style="color: purple;">50% dis...</h4>
+                        <img src="{{i.image.url}}" class="card-img-top" alt="..." style="width: 456px; height: 350px;">                    
+                        <div class="card-body">
+                          <h5 class="card-title">{{i.name}}</h5>
+                          <p class="card-text" style="color: palevioletred; font-weight: 500;">{{i.batafsil}} -<br><br>narxi : {{i.narxi}}; - rangi : {{i.color}}; - category - {{i.category}}.</p>
+                        </div>
+                        <div class="card-footer">
+                          <small class="text-muted"><h6 style="color: green; font-weight: bolder;">{{i.updated_at}}</h6></small>
+                          <a href="{% url 'edit' i.id %}" style="text-decoration: none; color: blueviolet;"><h4>edit</h4></a><hr>
+                          <del><a href="{% url 'delete' i.id%}" style="text-decoration: none; color: red;"><h4>delete</h4></a></del><hr>
+                          {% for h in news %}
+                          <p style="color: goldenrod; font-weight: 300;">{{h.soni}}</p>
+                          {% endfor %}
+                        <form action="" method="post">
+                          {% csrf_token %}
+                          <input type="hidden" name="p_id" value="{{i.id}}">
+                          {% if request.user in i.likes.user.all %}
+                            <button type="submit" class="btn btn-infor">
+                              <i class="bi bi-heart-fill"></i>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-heart-fill" viewBox="0 0 16 16">
+                                <path fill-rule="evenodd" d="M8 1.314C12.438-3.248 23.534 4.735 8 15-7.534 4.736 3.562-3.248 8 1.314"/>
+                              </svg>
+                            </button>
+                          {% else %}
+                            <button type="submit" class="btn btn-danger">
+                                <i class="bi bi-heart-fill"></i>
+                              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-heart-fill" viewBox="0 0 16 16">
+                              <path fill-rule="evenodd" d="M8 1.314C12.438-3.248 23.534 4.735 8 15-7.534 4.736 3.562-3.248 8 1.314"/>
+                              </svg>
+                          </button>
+                          {% endif %}
+                          {{i.likes.user.count}}
+                        </form>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </a>
+            </div>
+          </div>
+        </div>
+        <div class="col-5"></div>
+        </div>
+        {% endfor %}
+      </div>
+      </div><br><br><hr style="background-color: blue; color: blue; height: 3px;"><br>
+      <center style="margin-left: 490px;">
+        <nav aria-label="Page navigation example">
+          <ul class="pagination">
+            {% if page.has_previous %}
+            <li class="page-item"><a class="page-link" href="{% url 'home' %}?sahifa={{page.previous_page_number}}">Previous</a></li>
+            {% endif %}
+            <li class="page-item"><a class="page-link" href="#">{{page.number}}</a></li>
+            {% if page.has_next %}
+            <li class="page-item"><a class="page-link" href="{% url 'home' %}?sahifa={{page.next_page_number}}">Next</a></li>
+            {% endif %}
+          </ul>
+        </nav>
+      </center>
+    </div>
+     <!--  cards end -->
+
+
+{% endblock %}

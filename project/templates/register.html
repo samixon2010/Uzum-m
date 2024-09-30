@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>My registration site</title>
+        <style>
+
+            .container {
+                border: 3px wheat solid;
+                border-radius: 5%;
+                margin-left: 400px;
+                margin-right: 400px;
+            }
+            h1 {
+                text-align: center;
+                padding: 2% 10%;
+                color: red;
+            }
+            input {
+                border: none;
+                border-radius: 30px;
+                padding: 4% 25%;
+            }
+            form {
+                text-align: center;
+                padding: 4% 40%;
+            }
+            body {
+                background: url("https://images5.alphacoders.com/132/1328245.jpeg");
+            }
+            p {
+                color: red;
+            }
+            button {
+                background-color: greenyellow;
+                color: black;
+                width: 50px;
+                border: none;
+                border-radius: 20px;
+                height: 30px;
+                font-weight: 40px;
+            }
+            hr {
+                color: red;
+                width: 230px;
+            }
+            label {
+                color: burlywood;
+            }
+        </style>
+    </head>
+    <body>
+        <h1>Registration</h1>
+        <div class="container">
+        <form method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            {{forms.as_p}}
+            <button class="btn">send</button>
+        </form>
+      </div>
+      <a href="{% url 'home' %}"><button type="submit">back</button></a>
+    </body>
+</html>

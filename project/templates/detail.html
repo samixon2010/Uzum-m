@@ -1,0 +1,67 @@
+{% extends 'main.html' %}
+{% block content %}
+<br>
+<div class="container">
+<div class="container">
+<div class="row">
+<div class="col-3"></div>
+<div class="col-6">
+  <div class="card mb-3" style="max-width: 1140px; text-align: center; height: 400px; display: flex; justify-content: center;">
+    <div class="row g-0">
+      <div class="col-md-4">
+        <img src="{{product.image.url}}" class="img-fluid rounded-start" alt="...">
+      </div>
+      <div class="col-md-8">
+        <div class="card-body">
+          <h5 class="card-title" style="color: blue;">{{product.name}}</h5>
+          <p class="card-text" style="color: palevioletred; font-weight: 500;">{{product.batafsil}} -<br><br>narxi : {{product.narxi}}; - rangi : {{product.color}}; - category - {{product.category}}.</p>
+          <p class="card-text"><small class="text-body-secondary" style="color: brown; font-weight: 300;">{{product.created_at}}</small></p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="col-3"></div>
+
+</div>
+  <div class="row">
+    {% if product.comments.exists %}
+    {% for i in product.comments.all %}
+    <div class="container">
+    <form action="" method="post">
+      {% csrf_token %}
+      <input type="hidden" name="p_id" value="{{i.id}}">
+      {% if request.user in i.likes.user.all %}
+        <button type="submit" class="btn btn-danger">
+          <i class="bi bi-heart-fill"></i>
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-heart-fill" viewBox="0 0 16 16">
+            <path fill-rule="evenodd" d="M8 1.314C12.438-3.248 23.534 4.735 8 15-7.534 4.736 3.562-3.248 8 1.314"/>
+          </svg>
+        </button>
+      {% else %}
+        <button type="submit" class="btn btn-info">
+            <i class="bi bi-heart-fill"></i>
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-heart-fill" viewBox="0 0 16 16">
+          <path fill-rule="evenodd" d="M8 1.314C12.438-3.248 23.534 4.735 8 15-7.534 4.736 3.562-3.248 8 1.314"/>
+          </svg>
+      </button>
+      {% endif %}
+      {{i.likes.user.count}}<br><hr>
+    </div>
+    <div class="col-3">{{i.user.username}}</div>
+    <div class="col-6">{{i.comment}}</div>
+    {% endfor %}
+    {% else %}
+    <h1>Hozircha izohlar mavjud emas</h1>
+    {% endif %}
+  </div>
+  <br>
+  <form action="" method="post">
+    {% csrf_token %}
+    {{form.as_p}}
+  <button type="submit">save</button>
+</form>
+</div>
+</div>
+
+{% endblock %}
